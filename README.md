@@ -1,4 +1,4 @@
-# Writeup Arkavidia 5.0 CTF, Hanya Pwn & Reverse Binary
+# Writeup Arkavidia 5.0 CTF, Only Pwn & Reverse Binary
 
 ## Prequisite
 
