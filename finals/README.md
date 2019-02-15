@@ -371,7 +371,255 @@ Arkav5{m4k3_17_4lw4Y5_tRU3}
 
 flag: `Arkav5{m4k3_17_4lw4Y5_tRU3}`
 
+
 ## Hangman
-Bug terdapat di srand(time(0)) cukup menyamakan dengan time di server, dan kita mendapatkan semua kata2. 
-Berikut adalah payload saya
-They use epoch time (`srand(time(0))`)
+category: Pwn
+
+- attachment: [hangman](hangman/hangman)
+
+They use epoch time as random seed (`srand(time(0))`). Just sync time with server and we got all the word. Here are my payload.
+
+`exploit1` to get all word
+```
+from pwn import *
+
+r = None
+pp = None
+kamus = [None] * 32
+cuk = set()
+
+for x in cuk:
+    print x.__len__()
+
+
+WORDSIZE = 64
+
+def init():
+    global r, pp
+    r = remote('167.205.35.176', 31004)
+    pp = process('./random')
+    r.sendlineafter(':', 'fwp')
+
+def dead():
+    global r, pp
+    r.close()
+    pp.close()    
+
+def tebak_words():
+    global r, pp
+    while(kamus.count(None) > 0):
+        init()
+        r.sendlineafter(':', '1')
+        for i in range(5):
+            r.sendline(';')
+        r.recvuntil('''/ \\
+    || ''')
+        word = ''.join(r.recvline()[:-1].split())
+        print word
+        cuk.add(word)
+        print cuk.__len__()
+        r.sendline('')
+        print cuk
+        dead()
+    r.interactive()
+
+
+if __name__ == '__main__':
+    tebak_words()
+```
+And get that there is **only** 25 words.
+
+`exploit2.py` to assign a word into an index
+```
+from pwn import *
+
+r = None
+pp = None
+kamus = [None] * 25
+
+WORDSIZE = 25
+
+def init():
+    global r, pp
+    # r = remote('167.205.35.176', 31004)
+    r = remote('3.1.85.51', 10004)
+    # r = process('./hangman')
+    pp = process('./random')
+    r.sendlineafter(':', 'fwp')
+
+def dead():
+    global r, pp
+    r.close()
+    pp.close()    
+
+def tebak_words():
+    global r, pp
+    init()
+    while(kamus.count(None) > 0):
+        r.sendlineafter('[+] Your choice: ', '1')
+        for i in range(5):
+            r.sendline(';')
+        r.recvuntil('''/ \\
+    || ''')
+        # r.interactive()
+        word = ''.join(r.recvline()[:-1].split())
+        print word
+        pp.sendline('')
+        kantil = pp.recvline()
+        print kantil
+        idx = int(kantil) % WORDSIZE
+        if kamus[idx] != None and kamus[idx] != word:
+            log.info('error cuk %s %s' % (word, kamus[idx]))
+            return
+        kamus[idx] = word
+        print idx, word
+        print kamus
+        r.sendline('')
+    dead()
+    print kamus
+    r.interactive()
+
+
+if __name__ == '__main__':
+    tebak_words()
+```
+
+`exploit3.py` play until win
+```
+from pwn import *
+wordlist = ['awkward', 'bagpipes', 'banjo', 'croquet', 'jazzy',
+    'jinx', 'jukebox', 'kayak', 'kiosk', 'memento', 
+    'mystify', 'oxygen', 'pajama', 'pixel', 'polka',
+    'quad', 'quip', 'rhythmic', 'rogue', 'sphinx',
+    'squawk', 'swivel', 'twelfth', 'unzip', 'waxy']
+print wordlist.__len__()
+
+r = None
+pp = None
+
+WORDSIZE = wordlist.__len__()
+
+def init():
+    global r, pp
+    # r = remote('167.205.35.176', 31004)
+    r = remote('3.1.85.51', 10004)
+    # r = process('./hangman')
+    pp = process('./random')
+    r.sendlineafter(':', 'fwp')
+
+def dead():
+    global r, pp
+    r.close()
+    pp.close()    
+
+def get_rand():
+    pp.sendline('')
+    return int(pp.recvline()) % 25
+
+def tebak_words():
+    global r, pp
+    init()
+    cnt = 0
+    while(cnt < 10001):
+        r.sendlineafter('[+] Your choice: ', '1')
+        idx = get_rand()
+        ans_set = set(wordlist[idx])
+        for x in ans_set:
+            r.sendline(x)
+        r.sendline('')
+        r.recvuntil('Your score: ')
+
+        print r.recvline()
+        # r.interactive()
+        cnt += 1
+    r.interactive()
+
+
+if __name__ == '__main__':
+    tebak_words()
+```
+
+And here is the interaction after `exploit3.py` executed
+```
+998400
+
+998500
+
+998600
+
+998700
+
+998800
+
+998900
+
+999000
+
+999100
+
+999200
+
+999300
+
+999400
+
+999500
+
+999600
+
+999700
+
+999800
+
+999900
+
+1000000
+
+1000100
+
+[*] Switching to interactive mode
+[+] Greetings fwp! What would you like to do?
+    1. Play
+    2. Score
+    3. Hall of Fame
+    4. Prize
+    5. Rename
+    6. Restart
+    7. Exit
+
+[+] Your choice: $ 3
+
+[+] \ /   Hangman    \ /
+     0  Hall of Fame  0
+
+    1. Name  : Arkavidia 9
+       Score : 9000000
+
+    2. Name  : Petir[A]{3}
+       Score : 5000000
+
+    3. Name  : Pwnhub
+       Score : 2500000
+
+    4. Name  : f000000d
+       Score : 2000000
+
+    5. Name  : fwp
+       Score : 1000100
+
+
+[+] Greetings fwp! What would you like to do?
+    1. Play
+    2. Score
+    3. Hall of Fame
+    4. Prize
+    5. Rename
+    6. Restart
+    7. Exit
+
+[+] Your choice: $ 4
+
+[+] Flag: Arkav5{0ff_13y_0n3_3xpl01t3d}
+```
+flag: `Arkav5{0ff_13y_0n3_3xpl01t3d}`
+```
