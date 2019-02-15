@@ -1,14 +1,14 @@
 from pwn import *
 context(arch='amd64', bits=64)
 
-def binary_patching(pattern, patch):
-	inputstream = open('100_patch', 'r').read()
-	assert inputstream.count(pattern) <= 1
-	result = inputstream.replace(pattern, patch)
-	outputfile = open('100_patch', 'w')
-	outputfile.write(result)
-	outputfile.close()
 
+def binary_patching(pattern, patch):
+    inputstream = open('100_patch', 'r').read()
+    assert inputstream.count(pattern) <= 1
+    result = inputstream.replace(pattern, patch)
+    outputfile = open('100_patch', 'w')
+    outputfile.write(result)
+    outputfile.close()
 
 
 # patch 1, ubah jne jadi je
