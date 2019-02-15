@@ -1,0 +1,60 @@
+[m[-----------------------------START OF CRASH DUMP------------------------------][0m
+[mTimestamp: Sat Jan 12 11:33:15 2019[0m
+[mReason: [;31mInteractive dump[0m[0m
+[mExploitability: Unknown[0m
+[;34m[----------------------------------registers-----------------------------------][0m
+[m[;32mRAX[0m: [;34m0x555555755080[0m --> 0x0 
+[;32mRBX[0m: 0x0 
+[;32mRCX[0m: [;32m0x7ffff7ffcca0[0m --> 0x40f1200000000 
+[;32mRDX[0m: 0x0 
+[;32mRSI[0m: 0x1b 
+[;32mRDI[0m: [;34m0x555555755080[0m --> 0x0 
+[;32mRBP[0m: [;34m0x555555755080[0m --> 0x0 
+[;32mRSP[0m: [;34m0x7fffffffdc40[0m --> 0x0 
+[;32mRIP[0m: [;31m0x7ffff7a7aaee[0m (<_IO_fgets+30>:	mov    edx,DWORD PTR [rdx])
+[;32mR8 [0m: 0x1b 
+[;32mR9 [0m: 0x1 
+[;32mR10[0m: 0x2f1 
+[;32mR11[0m: [;31m0x7ffff7a7aad0[0m (<_IO_fgets>:	test   esi,esi)
+[;32mR12[0m: [;31m0x555555554890[0m (xor    ebp,ebp)
+[;32mR13[0m: [;34m0x7fffffffdd60[0m --> 0x1 
+[;32mR14[0m: 0x0 
+[;32mR15[0m: 0x0[0m
+[m[;32mEFLAGS[0m: 0x10202 ([;32mcarry[0m [;32mparity[0m [;32madjust[0m [;32mzero[0m [;32msign[0m [;32mtrap[0m [;1;31mINTERRUPT[0m [;32mdirection[0m [;32moverflow[0m)[0m
+[m[;34m[-------------------------------------code-------------------------------------][0m[0m
+[m   0x7ffff7a7aad5 <_IO_fgets+5>:[;2m	push   rbx[0m
+   0x7ffff7a7aad6 <_IO_fgets+6>:[;2;33m	jle    0x7ffff7a7ac18 <_IO_fgets+328>[0m
+   0x7ffff7a7aadc <_IO_fgets+12>:[;2;31m	cmp    esi,0x1[0m
+   0x7ffff7a7aadf <_IO_fgets+15>:[;2m	mov    rbp,rdi[0m
+   0x7ffff7a7aae2 <_IO_fgets+18>:[;2m	mov    r8d,esi[0m
+   0x7ffff7a7aae5 <_IO_fgets+21>:[;2;33m	je     0x7ffff7a7ac10 <_IO_fgets+320>[0m
+   0x7ffff7a7aaeb <_IO_fgets+27>:[;2m	mov    rbx,rdx[0m
+=> 0x7ffff7a7aaee <_IO_fgets+30>:[;1;32m	mov    edx,DWORD PTR [rdx][0m
+   0x7ffff7a7aaf0 <_IO_fgets+32>:[m	mov    eax,edx[0m
+   0x7ffff7a7aaf2 <_IO_fgets+34>:[m	and    eax,0x8000[0m
+   0x7ffff7a7aaf7 <_IO_fgets+39>:[;33m	jne    0x7ffff7a7ab54 <_IO_fgets+132>[0m
+   0x7ffff7a7aaf9 <_IO_fgets+41>:[m	mov    r9,QWORD PTR [rbx+0x88][0m
+   0x7ffff7a7ab00 <_IO_fgets+48>:[m	mov    r10,QWORD PTR fs:0x10[0m
+   0x7ffff7a7ab09 <_IO_fgets+57>:[;31m	cmp    r10,QWORD PTR [r9+0x8][0m
+   0x7ffff7a7ab0d <_IO_fgets+61>:[;33m	je     0x7ffff7a7ab4f <_IO_fgets+127>[0m
+   0x7ffff7a7ab0f <_IO_fgets+63>:[m	mov    esi,0x1[0m[0m
+[m[;34m[------------------------------------stack-------------------------------------][0m[0m
+[m0000| [;34m0x7fffffffdc40[0m --> 0x0 [0m
+[m0008| [;34m0x7fffffffdc48[0m --> [;34m0x7fffffffdc80[0m --> [;31m0x555555554b00[0m (push   r15)[0m
+[m0016| [;34m0x7fffffffdc50[0m --> [;31m0x555555554890[0m (xor    ebp,ebp)[0m
+[m0024| [;34m0x7fffffffdc58[0m --> [;31m0x555555554a1b[0m (mov    rax,QWORD PTR [rbp-0x10])[0m
+[m0032| [;34m0x7fffffffdc60[0m --> [;31m0x555555554b00[0m (push   r15)[0m
+[m0040| [;34m0x7fffffffdc68[0m --> [;31m0x555555554890[0m (xor    ebp,ebp)[0m
+[m0048| [;34m0x7fffffffdc70[0m --> 0x0 [0m
+[m0056| [;34m0x7fffffffdc78[0m --> 0x0 [0m
+[;34m[-----------------------backtrace (innermost 10 frames)------------------------][0m
+[m#0  _IO_fgets (buf=0x555555755080 "", n=0x1b, fp=0x0) at iofgets.c:47
+#1  0x0000555555554a1b in ?? ()
+#2  0x00007ffff7a2d830 in __libc_start_main (main=0x5555555549c0, argc=0x1, 
+    argv=0x7fffffffdd68, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fffffffdd58)
+    at ../csu/libc-start.c:291
+#3  0x00005555555548b9 in ?? ()
+[0m
+[m[------------------------------END OF CRASH DUMP-------------------------------]
+[0m

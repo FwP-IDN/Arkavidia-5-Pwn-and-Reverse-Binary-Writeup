@@ -1,0 +1,80 @@
+998400
+
+998500
+
+998600
+
+998700
+
+998800
+
+998900
+
+999000
+
+999100
+
+999200
+
+999300
+
+999400
+
+999500
+
+999600
+
+999700
+
+999800
+
+999900
+
+1000000
+
+1000100
+
+[*] Switching to interactive mode
+[+] Greetings fwp! What would you like to do?
+    1. Play
+    2. Score
+    3. Hall of Fame
+    4. Prize
+    5. Rename
+    6. Restart
+    7. Exit
+
+[+] Your choice: $ 3
+
+[+] \ /   Hangman    \ /
+     0  Hall of Fame  0
+
+    1. Name  : Arkavidia 9
+       Score : 9000000
+
+    2. Name  : Petir[A]{3}
+       Score : 5000000
+
+    3. Name  : Pwnhub
+       Score : 2500000
+
+    4. Name  : f000000d
+       Score : 2000000
+
+    5. Name  : fwp
+       Score : 1000100
+
+
+[+] Greetings fwp! What would you like to do?
+    1. Play
+    2. Score
+    3. Hall of Fame
+    4. Prize
+    5. Rename
+    6. Restart
+    7. Exit
+
+[+] Your choice: $ 4
+
+[+] Flag: Arkav5{0ff_13y_0n3_3xpl01t3d}
+[*] Got EOF while reading in interactive

