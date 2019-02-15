@@ -370,3 +370,8 @@ Arkav5{m4k3_17_4lw4Y5_tRU3}
 ```
 
 flag: `Arkav5{m4k3_17_4lw4Y5_tRU3}`
+
+## Hangman
+Bug terdapat di srand(time(0)) cukup menyamakan dengan time di server, dan kita mendapatkan semua kata2. 
+Berikut adalah payload saya
+They use epoch time (`srand(time(0))`)
