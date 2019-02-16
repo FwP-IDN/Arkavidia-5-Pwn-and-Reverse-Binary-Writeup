@@ -24,7 +24,7 @@ int sub_870()
 }
 ```
 
-Off by one error will lead the change of saved ebp and format string attack that pointed to saved ebp will lead to write on arbitrary address around stack :O. With little brute force in script(the probabilty of success is 1/16)
+Off by one error will lead the change of saved rbp and format string attack that pointed to saved rbp will lead to write on arbitrary address around stack :O. With little brute force in script(the probabilty of success is 1/16)
 ```
 from pwn import *
 
